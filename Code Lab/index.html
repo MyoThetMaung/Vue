@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+        .red{
+            color: red;
+        }
+        .delete{
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+        <div id="app">
+            <h2>{{name}}</h2>
+            <h2>Age is : {{2022-year}}</h2>
+            <h4 :class="[color,through]">Hello welcome to Myanmar</h4>
+            <a :href="link" target="blank">Google</a>
+            <input type="text" :disabled="status">
+            <hr>
+            <div>
+                <p v-if="fruit == 'apple'">this is apple</p>
+                <p v-else-if="fruit == 'orange'">this is orange</p>
+                <p v-else="fruit == 'other'">Other fruits</p>
+            </div>
+            <hr>
+            <div>
+                <h3>{{number}}</h3>
+                <button @click="increase">Increase number</button>
+                <button @click="decrease">Decrease number</button>
+                <p v-if="number == 0">this is zero</p>
+                <p v-else-if="number < 0">this is minus number</p>
+                <p v-else-if="number > 0">this is plus number</p>
+            </div> <hr>
+
+            <div>
+                <input type="text" v-model="type"> {{type}} <br><br>
+                <button @click="send">Send</button>
+            </div> <hr>
+
+            <div>
+                <h2>reverse name  : {{reverse}}</h2>
+            </div>
+
+        </div>
+</body>
+    <script>
+        let app = Vue.createApp({
+            data(){
+                return {
+                    'name' : 'David',
+                    'year' : 1997,
+                    'color': 'red',
+                    'through': 'delete',
+                    'link' : "https://www.google.com",
+                    'status' : true,
+                    'fruit' : 'other',
+                    'number' : 0,
+                    'type' : ''
+                }
+            },
+            computed:{      //must return a value
+                reverse(){
+                    return this.name.split('').reverse().join('');
+                }
+            },
+            methods:{       //return or not ok
+                increase(){
+                    this.number++;
+                },
+                decrease(){
+                    this.number--;
+                },
+                send(){
+                    alert(this.type);
+                    this.type ="";
+                }
+            }
+        });
+        app.mount('#app');
+    </script>
+</html>

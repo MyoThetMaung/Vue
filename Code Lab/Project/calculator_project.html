@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="app" class="container">
+        <h1 class="text-center text-success m-4">Calculator</h1>
+        <div class="row mb-5 justify-content-center">
+            <div class="col-12">
+                <div class="card bg-secondary">
+                    <div class="card-body">
+                        <div class="border bg-light p-3 rounded mb-3 d-flex justify-content-end align-center">
+                           {{answer}}
+                        </div>
+                        <div class="row">   
+                            <div class="col-6 form-group">
+                                <input type="text" v-model="userInput.firstNumber" class="form-control bg-light" placeholder="First Number" required>
+                                <small class="text-danger" v-if="validation.firstNumber">First number is required</small>
+                            </div>
+                            <div class="col-6 form-group">
+                                <input type="text" v-model="userInput.secondNumber" class="form-control bg-light" placeholder="Second Number" required>
+                                <small class="text-danger" v-if="validation.secondNumber">Second number is required</small>
+                            </div> <br> <br>
+                            <div class="col-4 form-group">
+                                <select class="form-select" v-model="userInput.operator"aria-label="Default select example">
+                                    <option value="" selected>Choose option...</option>
+                                    <option value="+">+</option>
+                                    <option value="-">-</option>
+                                    <option value="*">*</option>
+                                    <option value="/">/</option>
+                                  </select>
+                                  <small class="text-danger" v-if="validation.operator">Operator is required</small>
+                            </div>
+
+                            <div class="col-6 d-flex justify-content-end">
+                                <button class="btn btn-primary" @click="calculate">Calculate</button>
+                            </div>
+                            <div class="col-2 d-flex justify-content-end">
+                                <button class="btn btn-danger" @click="clear">Clear</button>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-warning mt-3 w-25 " @click="save" :disabled="disableCheck">Save</button>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="card-footer">
+                        <h5 class="text-light">History</h5>
+
+                        <div class="text-light"  v-for="record in records">
+                            {{record}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+<script src="https://unpkg.com/vue@3"></script>
+<script>
+        let app = Vue.createApp({
+            data(){
+                return {
+                   answer: 0,
+                   records : [],
+                   disableCheck: true,
+                   userInput : {
+                       firstNumber : '',
+                       secondNumber : '',
+                       operator : ''
+                   },
+                   validation: {
+                          firstNumber : false,
+                          secondNumber : false,
+                          operator : false
+                   }
+                }
+            },
+            methods:{     
+                calculate(){  
+                    this.validate();  
+                    if(!this.validation.firstNumber && !this.validation.secondNumber && !this.validation.operator){
+                        let result = this.condition();
+                        this.answer = `
+                            ${this.userInput.firstNumber} ${this.userInput.operator} ${this.userInput.secondNumber} = ${result}
+                        `
+                        this.clean();
+                        this.disableCheck = false;
+                    }
+                },
+                condition(){
+                    let num1 = parseInt(this.userInput.firstNumber);
+                    let num2 = parseInt(this.userInput.secondNumber);
+                    switch(this.userInput.operator){
+                        case "+":
+                            return num1 + num2;
+                            break;
+                        case "-":
+                            return num1 - num2;
+                            break;
+                        case "*":
+                            return num1 * num2;
+                            break;
+                        case "/":
+                            return num1 / num2;
+                            break;
+                        default:
+                            return "error";
+                            break;
+                    }
+                },
+                clean(){
+                    this.userInput.firstNumber = '';
+                    this.userInput.secondNumber = '';
+                    this.userInput.operator = '';
+                },
+                clear(){
+                    this.clean();
+                    this.answer = 0;
+                    this.records = [];
+                },
+                save(){
+                    if(this.disableCheck==false){ 
+                        this.records.push(this.answer);
+                        this.answer = 0;
+                    }
+                    this.disableCheck= true;
+                },
+                validate(){
+                    this.validation.firstNumber = this.userInput.firstNumber == '' ? true : false;
+                    this.validation.secondNumber = this.userInput.secondNumber == '' ? true : false;
+                    this.validation.operator = this.userInput.operator == '' ? true : false; 
+                }
+
+            }
+        });
+        app.mount('#app');
+    </script>
+</html>

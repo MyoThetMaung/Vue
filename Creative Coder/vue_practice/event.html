@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event </title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<style>
+    .one{
+        padding: 100px;
+        display: inline-block;
+        margin: 30px;
+        background-color: green;
+    }
+</style>
+<body>
+    <div id="event">
+            <div class="one" @mouseover="mouseover($event,'hello')">Mouse over</div>
+            <div class="one" @mouseleave="mouseleave">Mouse leave</div>
+            <div class="one" @dblclick="double_click">Mouse double click</div>
+    </div>
+
+    <script>
+        let app = Vue.createApp({
+            data(){
+                return {
+                    name : 'hello'
+                }
+            },
+            
+            methods:{
+               mouseover(event,data){
+                    console.log("mouse is over",event,data);
+               },
+               mouseleave(){
+                    console.log("mouse is leave");
+               },
+               double_click(){
+                    console.log("mouse is dbclick");
+               }
+            }
+        })
+        app.mount('#event');
+    </script>
+</body>
+</html>

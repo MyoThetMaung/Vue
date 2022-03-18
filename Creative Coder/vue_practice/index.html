@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue testing</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <style>
+        li{
+            list-style: none;
+            padding: 10px;
+        }
+        .favorite{
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+   <div id="app">
+        <!-- <h1>{{age}}</h1>
+        <h1>{{name}}</h1>
+        <button v-on:click="age++">Click here</button>
+        <button v-on:click="changeName">Change name</button> -->
+        <div v-if="book">
+            <div v-for="book in books">
+                <li :class="{favorite:book.fav}" @click="book.fav=!book.fav">
+                    <img :src="book.img" width="150" height="150">
+                    <h3>{{book.name}}</h3>
+                    <h3>{{book.age}}</h3>
+                    <h3>{{book.address}}</h3>
+                    <hr>
+                </li>
+            </div>
+        </div>
+        <button @click="book=!book">
+            <span v-if="book">Hide Book</span>
+            <span v-if="!book">Show Book</span>
+        </button> <br>
+        <a :href="link">Google</a>
+   </div>
+   <script>
+       let app = Vue.createApp({
+           data(){
+               return{
+               books:[
+               {
+                    name : "davidbackham",
+                    age: 24,
+                    address: "yangon",
+                    book : true,
+                    fav : true,
+                    img : "https://th.bing.com/th/id/OIP.I2xOV3-YwQT0CnbHN5z8PQHaEN?w=320&h=182&c=7&r=0&o=5&dpr=1.25&pid=1.7"
+               },
+               {
+                    name : "michaeljackson",
+                    age: 24,
+                    address: "yangon",
+                    book : true,
+                    fav : false,
+                    img : "https://th.bing.com/th/id/OIP.JBS1YILllX4sQz9RTqgXggHaE8?w=272&h=182&c=7&r=0&o=5&dpr=1.25&pid=1.7"
+                },
+                {
+                    name : "Johndoe",
+                    age: 24,
+                    address: "yangon",
+                    book : true,
+                    fav : true,
+                    img : "https://th.bing.com/th/id/OIP.I2xOV3-YwQT0CnbHN5z8PQHaEN?w=320&h=182&c=7&r=0&o=5&dpr=1.25&pid=1.7"
+                }
+               ],
+               book: true,
+               link: "https://www.google.com"
+           }},
+
+           methods:{
+                changeName(){
+                    this.name = "ma tin hla";
+                }
+           }
+       })
+       app.mount('#app');
+   </script> 
+</body>
+</html>

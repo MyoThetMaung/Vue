@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+        <div id="app">
+            <h2>Looping</h2>
+            <ul>
+                <li v-for="(name,index) in names">{{ index }} | {{name}}</li>
+            </ul>
+            <hr>
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Age</th>
+                    <th>Name</th>
+                </tr>
+                <tr v-for="item in items">
+                    <td>{{item.id}}</td>
+                    <td>{{item.age}}</td>
+                    <td>{{item.name}}</td>
+                </tr>
+            </table>
+        </div>
+</body>
+    <script>
+        let app = Vue.createApp({
+            data(){
+                return {
+                   'names' : ['David','John','Peter','Mary','Linda','Sara','Aung'],
+                   'items' : [
+                        {'id' : 1, 'age' : 20, 'name' : 'David'},
+                        {'id' : 2, 'age' : 22, 'name' : 'John'},
+                        {'id' : 3, 'age' : 23, 'name' : 'Peter'},
+                        {'id' : 4, 'age' : 24, 'name' : 'Mary'},
+                        {'id' : 5, 'age' : 25, 'name' : 'Linda'},
+                        {'id' : 6, 'age' : 26, 'name' : 'Sara'},
+                        {'id' : 7, 'age' : 27, 'name' : 'Aung'}
+                   ]
+                }
+            },
+            computed:{      //must return a value
+                
+            },
+            methods:{       //return or not ok
+               
+            }
+        });
+        app.mount('#app');
+    </script>
+</html>
